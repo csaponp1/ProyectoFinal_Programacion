@@ -3,14 +3,17 @@
 #include <iostream>
 #include "Empleados.h"
 #include <string.h>
+#include <conio.h>
+
 using namespace std;
 int x = 0;
 int op=0, op2=0, op3=0;
 int main()
 {
 
-	string nombres, apellidos, direccion, dpi, fecha_inicio_lab, fechaingreso,fecha_nac;
-	int genero = 0, idpuesto = 0, telefono = 0;
+	string nombres="", apellidos="", direccion="", dpi="", fecha_inicio_lab="", fechaingreso="", fecha_nac="";
+	int idpuesto = 0, telefono = 0;
+	bool genero=1;
 	int op;
 	bool ciclo = true;
 	do
@@ -31,14 +34,16 @@ int main()
 			
 			bool ciclo3 = true;
 			Empleado obj = Empleado(nombres, apellidos, direccion, telefono, genero, dpi, idpuesto, fecha_nac, fecha_inicio_lab, fechaingreso);
-
-			cout << "INGRESE OPCION" << endl;
-			cout << "1 CREAR" << endl;
-			cout << "2 LEER" << endl;
-			cout << "3 ACTUALIZAR" << endl;
-			cout << "4 ELIMINAR" << endl;
-			cout << "5. SALIR" << endl;
-			cout << "ELIJA !" << endl;
+			
+			cout << "\t\t_________________________________________________" << endl;
+			cout << "\t\t-------------- TABLA EMPLEADOS -------------------- " << endl;
+			cout << "\t\tINGRESE OPCION" << endl;
+			cout << "\t\t1 CREAR" << endl;
+			cout << "\t\t2 LEER" << endl;
+			cout << "\t\t3 ACTUALIZAR" << endl;
+			cout << "\t\t4 ELIMINAR" << endl;
+			cout << "\t\t5. SALIR" << endl;
+			cout << "\t\tELIJA !" << endl;
 			cin >> op2;
 
 			switch (op2) {
@@ -58,7 +63,7 @@ int main()
 				cin >> telefono;
 				cout << "ingrese DPI" << endl;
 				cin >> dpi;
-				cout << "ingrese genero (1/0)" << endl;
+				cout << "ingrese genero (hombre = 1 / mujer = 0)" << endl;
 				cin >> genero;
 				cout << "ingrese id puesto" << endl;
 				cin >> idpuesto;
@@ -67,6 +72,16 @@ int main()
 				getline(cin, fecha_inicio_lab);
 				cout << "ingrese fecha/hora ingreso" << endl;
 				getline(cin, fechaingreso);
+				obj.setNombre(nombres);
+				obj.setApellido(apellidos);
+				obj.setDireccion(direccion);
+				obj.setTelefono(telefono);
+				obj.setGenero(genero);
+				obj.setDpi(dpi);
+				obj.setF_nacimiento(fecha_nac);
+				obj.setF_inilab(fecha_inicio_lab);
+				obj.setF_ingre(fechaingreso);
+
 
 				obj.crear();
 				break;
@@ -87,7 +102,44 @@ int main()
 				cout << "MODIFICAR ? (1/0)" << endl;
 				cin >> busqueda;
 					if (busqueda == 1) {
-					obj.actualizar(x);
+
+							/////
+						cout << "ingrese nombres" << endl;
+						cin.ignore();
+						getline(cin, nombres);
+						cout << "ingrese apellidos" << endl;
+						getline(cin, apellidos);
+						cout << "ingrese fecha nacimiento" << endl;
+						getline(cin, fecha_nac);
+						cout << "ingrese direccion" << endl;
+						getline(cin, direccion);
+						cout << "ingrese telefono" << endl;
+						cin >> telefono;
+						cout << "ingrese DPI" << endl;
+						cin >> dpi;
+						cout << "ingrese genero (hombre = 1 / mujer = 0)" << endl;
+						cin >> genero;
+						cout << "ingrese id puesto" << endl;
+						cin >> idpuesto;
+						cin.ignore();
+						cout << "ingrese fecha que inicio labores" << endl;
+						getline(cin, fecha_inicio_lab);
+						cout << "ingrese fecha/hora ingreso" << endl;
+						getline(cin, fechaingreso);
+						obj.setNombre(nombres);
+						obj.setApellido(apellidos);
+						obj.setDireccion(direccion);
+						obj.setTelefono(telefono);
+						obj.setGenero(genero);
+						obj.setDpi(dpi);
+						obj.setF_nacimiento(fecha_nac);
+						obj.setF_inilab(fecha_inicio_lab);
+						obj.setF_ingre(fechaingreso);
+						obj.actualizar();
+
+						system("pause");
+						system("cls");
+					
 					}
 					else {
 						cout << "no hiciste nada" << endl;
@@ -133,7 +185,7 @@ int main()
 
 			{
 	case 3:
-		ciclo = false;
+		ciclo = false;	
 		ciclo2 = false;
 		break;
 			}

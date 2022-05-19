@@ -20,7 +20,7 @@ private:
 public:
 	Empleado() {
 	}
-	Empleado(string nom, string ape, string dir, int tel, int gen,string dpi,int id_puesto, string fn, string fecha_inilab, string fecha_ingre) : Persona(nom, ape, dir, tel, gen) {
+	Empleado(string nom, string ape, string dir, int tel, bool gen,string dpi,int id_puesto, string fn, string fecha_inilab, string fecha_ingre) : Persona(nom, ape, dir, tel, gen) {
 
 		fecha_nacimiento = fn;
 		fecha_inicio_labores = fecha_inilab;
@@ -74,7 +74,7 @@ public:
 
 		if (cn.getconectar()) {
 			string insert =
-				"INSERT INTO empleados(nombres, apellidos, direccion, telefono, dpi, genero, fecha_nacimiento, idpuesto, fecha_inicio_labores, fechaingreso)VALUES('" + nombres + "', '" + apellidos + "', '" + direccion + "', '" + aux_i + "', '" + DPI + "', " + aux_iii + ", '" + fecha_nacimiento + "', '" + aux_ii + "', '" + fecha_inicio_labores + "', '" + fechaingreso + "');";
+				"INSERT INTO empleados(nombres, apellidos, direccion, telefono, dpi, genero, fecha_nacimiento, idpuesto, fecha_inicio_labores, fechaingreso)VALUES('"+ nombres +"', '"+ apellidos +"', '"+ direccion +"', '"+ aux_i +"', '"+ DPI +"', "+ aux_iii +", '"+ fecha_nacimiento+ "', '"+ aux_ii +"', '"+ fecha_inicio_labores +"', '"+ fechaingreso+ "');";
 			const char* i = insert.c_str();
 			q_estado = mysql_query(cn.getconectar(), i);
 			if (!q_estado) {
@@ -89,7 +89,7 @@ public:
 		}
 		cn.cerrar_conexion();
 	}
-
+	/*
 	void actualizar(int x) {
 		int q_estado;
 		ConexionBD cn = ConexionBD();
@@ -99,7 +99,7 @@ public:
 		string auxii = to_string(idpuesto);
 		string where = to_string(x);
 		if (cn.getconectar()) {
-			string act = "UPDATE empleados SET nombres ='" + nombres + "', apellidos ='" + apellidos + "',direccion ='" + direccion + "',telefono =" + aux_j + ", dpi ='" + DPI + "',genero =" + auxi + ",fecha_nacimiento ='" + fecha_nacimiento + "',idpuesto =" + auxii + ",fecha_inicio_labores ='" + fecha_inicio_labores + "',fechaingreso ='" + fechaingreso + "', WHERE idempleado =" + where + "; ";
+			string act = "update empleados SET nombres = '" + nombres + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', telefono = '" + aux_j + "',dpi = '" + DPI + "', genero =" + auxi + ", fecha_nacimiento = '" + fecha_nacimiento + "', idpuesto = " + auxii + ", fecha_inicio_labores = '" + fecha_inicio_labores + "', fechaingreso = '" + fechaingreso + "',where idempleado = " + where + ";";
 			const char* a = act.c_str();
 			q_estado = mysql_query(cn.getconectar(), a);
 			if (!q_estado) {
@@ -115,6 +115,7 @@ public:
 		}
 		cn.cerrar_conexion();
 	}
+	*/
 
 	void eliminar(int x) {
 		int q_estado;
@@ -171,6 +172,48 @@ public:
 		cn.cerrar_conexion();
 	}
 
+	///////////////////////////
+	void actualizar() {
+		int q_estado = 0;
+		ConexionBD cn = ConexionBD();
+		cn.abrir_conexion();
+		int aux;
+		cout << "ingrese id a actualizar " << endl;
+		cin >> aux;
+		string aux_j = to_string(telefono);
+		string auxi = to_string(genero);
+		string auxii = to_string(idpuesto);
+		string i = to_string(aux);
+		
+		if (cn.getconectar()) {
+			string update = "update empleados SET nombres = '" + nombres + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', telefono = '" + aux_j + "',dpi = '" + DPI + "', genero =" + auxi + ", fecha_nacimiento = '" + fecha_nacimiento + "', idpuesto = " + auxii + ", fecha_inicio_labores = '" + fecha_inicio_labores + "', fechaingreso = '" + fechaingreso + "',where idempleado = " + i + ";";
+			const char* upda = update.c_str();
+			q_estado = mysql_query(cn.getconectar(), upda);
+			if (!q_estado) {
+				cout << " modificado " << endl;
+			}
+			else {
+				cout << "error xxx" << endl;
+			}
+
+		}
+		else {
+			cout << " error de conexion xxx" << endl;
+		}
+		cn.cerrar_conexion();
+	}
+	///////////////////////////
+
+	void setNombre(string nom) {nombres = nom;}
+	void setApellido(string ape) { apellidos = ape; }
+	void setDireccion(string dir) { direccion = dir; }
+	void setTelefono(int tel) { telefono = tel; }
+	void setGenero(bool gen) { genero = gen; }
+	void setDpi(string dpi) { DPI=dpi; }
+	void setIDpuesto(int id_puesto) { idpuesto = id_puesto; }
+	void setF_nacimiento(string fn) { fecha_nacimiento = fn; }
+	void setF_inilab(string f_inilab) { fecha_inicio_labores = f_inilab; }
+	void setF_ingre(string fecha_ingre) { fechaingreso = fecha_ingre; }
 };
 
 
