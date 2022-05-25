@@ -5,6 +5,8 @@
 #include <string.h>
 #include <conio.h>
 
+
+
 using namespace std;
 int x = 0;
 int op=0, op2=0, op3=0;
@@ -13,8 +15,10 @@ int main()
 
 	string nombres="", apellidos="", direccion="", dpi="", fecha_inicio_lab="", fechaingreso="", fecha_nac="";
 	int idpuesto = 0, telefono = 0;
+	
 	bool genero=1;
 	int op;
+	char genero1;
 	bool ciclo = true;
 	do
 	{
@@ -50,6 +54,7 @@ int main()
 
 				{
 			case 1:
+				char fecha[25];
 				cout << "ingrese nombres" << endl;
 				cin.ignore();
 				getline(cin, nombres);
@@ -63,7 +68,10 @@ int main()
 				cin >> telefono;
 				cout << "ingrese DPI" << endl;
 				cin >> dpi;
-				cout << "ingrese genero (hombre = 1 / mujer = 0)" << endl;
+				cout << "ingrese genero (m = masculino / f = femenino)" << endl;
+				cin >> genero1;
+				genero = genero1 == 'm' ? 1 : 0;
+
 				cin >> genero;
 				cout << "ingrese id puesto" << endl;
 				cin >> idpuesto;
@@ -78,6 +86,7 @@ int main()
 				obj.setTelefono(telefono);
 				obj.setGenero(genero);
 				obj.setDpi(dpi);
+				obj.setIDpuesto(idpuesto);
 				obj.setF_nacimiento(fecha_nac);
 				obj.setF_inilab(fecha_inicio_lab);
 				obj.setF_ingre(fechaingreso);
@@ -95,15 +104,16 @@ int main()
 				}
 				{
 			case 3:
-				int busqueda = 0;
-				cout << "id a modificar" << endl;
+				char eleccion;
+				cout << "ingrese id a modificar" << endl;
 				cin >> x;
 				obj.leer(x);
-				cout << "MODIFICAR ? (1/0)" << endl;
-				cin >> busqueda;
-					if (busqueda == 1) {
-
-							/////
+				cout << "\nDesea modificar ? (s/n)";
+				cin >> eleccion;
+				if (eleccion == 'n') {
+					break;
+				}
+			
 						cout << "ingrese nombres" << endl;
 						cin.ignore();
 						getline(cin, nombres);
@@ -132,18 +142,16 @@ int main()
 						obj.setTelefono(telefono);
 						obj.setGenero(genero);
 						obj.setDpi(dpi);
+						obj.setIDpuesto(idpuesto);
 						obj.setF_nacimiento(fecha_nac);
 						obj.setF_inilab(fecha_inicio_lab);
 						obj.setF_ingre(fechaingreso);
-						obj.actualizar();
+						obj.actualizar(x);
 
 						system("pause");
 						system("cls");
 					
-					}
-					else {
-						cout << "no hiciste nada" << endl;
-					}
+			
 				break;
 
 				}

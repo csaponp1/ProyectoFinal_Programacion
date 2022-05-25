@@ -41,7 +41,8 @@ public:
 		cout << "id_e" << "| " << "nombres" << " | " << "apellidos" << " | " << "direccion" << " | " << "telefono" << " | " << "DPI\t\t" << " | " << "SEXO" << " | " << "F_NAC" << " | " << "PUESTO" << " | " << "F_INICIO_LABORAR" << " | " << "F_INGRESO" << " | " << endl;
 
 		if (cn.getconectar()) {
-			string consulta = "select *from empleados";
+			string consulta =
+				"select idempleado,nombres,apellidos,direccion,telefono,dpi, CASE when genero = 1 then 'masculino' when genero = 0 then 'femenino' end as generotext,fecha_nacimiento, idpuesto, fecha_inicio_labores, fechaingreso from empleados; ";
 			const char* con = consulta.c_str(); //convertimos a char
 			q_estado = mysql_query(cn.getconectar(), con);
 			if (!q_estado) {
@@ -78,7 +79,7 @@ public:
 			const char* i = insert.c_str();
 			q_estado = mysql_query(cn.getconectar(), i);
 			if (!q_estado) {
-				cout << "ingreseo exitoso !!!!!!!!" << endl;
+				cout << "ingreso exitoso !!!!!!!!" << endl;
 			}
 			else {
 				cout << "xxx ERROR AL HACER INSERT xxx" << endl;
@@ -149,7 +150,7 @@ public:
 		cout << "id_e" << "| " << "nombres" << " | " << "apellidos" << " | " << "direccion" << " | " << "telefono" << " | " << "DPI\t\t" << " | " << "SEXO" << " | " << "F_NAC" << " | " << "PUESTO" << " | " << "F_INICIO_LABORAR" << " | " << "F_INGRESO" << " | " << endl;
 
 		if (cn.getconectar()) {
-			string consulta = "select *from empleados where idempleado="+aux_busqueda+";";
+			string consulta = "select idempleado, nombres, apellidos, direccion, telefono, dpi, CASE when genero = 1 then 'masculino' when genero = 0 then 'femenino' end as generotext, fecha_nacimiento, idpuesto, fecha_inicio_labores, fechaingreso from empleados where idempleado="+aux_busqueda+";";
 			const char* con = consulta.c_str(); //convertimos a char
 			q_estado = mysql_query(cn.getconectar(), con);
 			if (!q_estado) {
@@ -173,20 +174,18 @@ public:
 	}
 
 	///////////////////////////
-	void actualizar() {
+	void actualizar(int x) {
+		int op;
 		int q_estado = 0;
 		ConexionBD cn = ConexionBD();
 		cn.abrir_conexion();
-		int aux;
-		cout << "ingrese id a actualizar " << endl;
-		cin >> aux;
-		string aux_j = to_string(telefono);
-		string auxi = to_string(genero);
-		string auxii = to_string(idpuesto);
-		string i = to_string(aux);
 		
+		string tel = to_string(telefono);
+		string gentext = to_string(genero);
+		string id_puesto = to_string(idpuesto);
+		string i = to_string(x);
 		if (cn.getconectar()) {
-			string update = "update empleados SET nombres = '" + nombres + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', telefono = '" + aux_j + "',dpi = '" + DPI + "', genero =" + auxi + ", fecha_nacimiento = '" + fecha_nacimiento + "', idpuesto = " + auxii + ", fecha_inicio_labores = '" + fecha_inicio_labores + "', fechaingreso = '" + fechaingreso + "',where idempleado = " + i + ";";
+			string update = "update empleados SET nombres = '" + nombres + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', telefono = '" + tel + "',dpi = '" + DPI + "', genero =" + gentext + ", fecha_nacimiento = '" + fecha_nacimiento + "', idpuesto = " + id_puesto + ", fecha_inicio_labores = '" + fecha_inicio_labores + "', fechaingreso = '" + fechaingreso + "' where idempleado = " + i + ";";
 			const char* upda = update.c_str();
 			q_estado = mysql_query(cn.getconectar(), upda);
 			if (!q_estado) {
