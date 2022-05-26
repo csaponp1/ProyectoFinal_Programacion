@@ -4,12 +4,16 @@
 #include "Empleados.h"
 #include <string.h>
 #include <conio.h>
+//nueva libreria, time.h
+#include <time.h>
+
 
 
 
 using namespace std;
 int x = 0;
 int op=0, op2=0, op3=0;
+string calcular_hora();
 int main()
 {
 
@@ -17,11 +21,12 @@ int main()
 	int idpuesto = 0, telefono = 0;
 	
 	bool genero=1;
-	int op;
+	
 	char genero1;
 	bool ciclo = true;
 	do
 	{
+		calcular_hora();
 		bool ciclo2 = true;
 		cout << "BIENVENIDO AL SISTEMA DE EL_BUEN_ZAPATO" << endl;
 		cout << "1. CRUD empleados" << endl;
@@ -37,7 +42,8 @@ int main()
 		case 1:
 			
 			bool ciclo3 = true;
-			Empleado obj = Empleado(nombres, apellidos, direccion, telefono, genero, dpi, idpuesto, fecha_nac, fecha_inicio_lab, fechaingreso);
+			//al cambiar el persona.h el constructor tambien cambió, solo miren como se construye el objeto segun personas.h
+			Empleado obj = Empleado(nombres, apellidos, direccion, fecha_nac, telefono, genero, dpi, idpuesto, fecha_inicio_lab, fechaingreso);
 			
 			cout << "\t\t_________________________________________________" << endl;
 			cout << "\t\t-------------- TABLA EMPLEADOS -------------------- " << endl;
@@ -54,7 +60,7 @@ int main()
 
 				{
 			case 1:
-				char fecha[25];
+				
 				cout << "ingrese nombres" << endl;
 				cin.ignore();
 				getline(cin, nombres);
@@ -71,15 +77,15 @@ int main()
 				cout << "ingrese genero (m = masculino / f = femenino)" << endl;
 				cin >> genero1;
 				genero = genero1 == 'm' ? 1 : 0;
-
-				cin >> genero;
+				
 				cout << "ingrese id puesto" << endl;
 				cin >> idpuesto;
 				cin.ignore();
 				cout << "ingrese fecha que inicio labores" << endl;
 				getline(cin, fecha_inicio_lab);
 				cout << "ingrese fecha/hora ingreso" << endl;
-				getline(cin, fechaingreso);
+				fechaingreso = calcular_hora();
+
 				obj.setNombre(nombres);
 				obj.setApellido(apellidos);
 				obj.setDireccion(direccion);
@@ -186,7 +192,7 @@ int main()
 
 			{
 	case 2:
-		cout << "hola mundo jajaja" << endl;
+		cout << "------------------CRUD PUESTOS-------------------------" << endl;
 		return 0;
 		break;
 			}
@@ -206,4 +212,16 @@ int main()
 	
 	return 0;
 }
+;
+//metodo nuevo
+string calcular_hora() {
+	time_t now = time(NULL);
+	struct tm tm_now;
+	localtime_s(&tm_now, &now);
+	char buff[100];
+	strftime(buff, sizeof(buff), "%Y-%m-%d %H-%M-%S", &tm_now);
+	return buff;
 
+
+
+};
