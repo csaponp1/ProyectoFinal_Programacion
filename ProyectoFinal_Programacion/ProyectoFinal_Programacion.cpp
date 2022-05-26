@@ -114,7 +114,7 @@ int main()
 				cout << "ingrese id a modificar" << endl;
 				cin >> x;
 				obj.leer(x);
-				cout << "\nDesea modificar ? (s/n)";
+				cout << "\nDesea modificar ? (s/n): ";
 				cin >> eleccion;
 				if (eleccion == 'n') {
 					break;
@@ -133,15 +133,16 @@ int main()
 						cin >> telefono;
 						cout << "ingrese DPI" << endl;
 						cin >> dpi;
-						cout << "ingrese genero (hombre = 1 / mujer = 0)" << endl;
-						cin >> genero;
+						cout << "ingrese genero m/f (masculino = n / femenino = f)" << endl;
+						cin >> genero1;
+						genero = genero1 == 'm' ? 1 : 0;
 						cout << "ingrese id puesto" << endl;
 						cin >> idpuesto;
 						cin.ignore();
 						cout << "ingrese fecha que inicio labores" << endl;
 						getline(cin, fecha_inicio_lab);
-						cout << "ingrese fecha/hora ingreso" << endl;
-						getline(cin, fechaingreso);
+						cout << "fecha-hora en que fue hecho el update: '" << calcular_hora<<"'";
+						fechaingreso = calcular_hora();
 						obj.setNombre(nombres);
 						obj.setApellido(apellidos);
 						obj.setDireccion(direccion);
