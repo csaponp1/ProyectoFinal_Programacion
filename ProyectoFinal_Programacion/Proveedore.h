@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class Proveedores : public Persona{
+class Proveedore : public Persona{
 private: int idproveedores = 0;
 
 public: string nit;

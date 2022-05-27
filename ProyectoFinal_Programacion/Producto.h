@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 using namespace std;
-class cProducto{
+class Producto{
 private: string idproducto,idmarca;
 
 public: string nombre_producto, descripcion,imagen,fechaingreso;
@@ -9,9 +9,9 @@ public: string nombre_producto, descripcion,imagen,fechaingreso;
 		 float precio_costo=0.0, precio_venta=0.0;
 
 public: 
-	cProducto() {
+	Producto() {
 	}
-	cProducto(string idprod,string nprod,string idma, string des,string img, float pcosto, float pventa, int exis,string f_in) {
+	Producto(string idprod,string nprod,string idma, string des,string img, float pcosto, float pventa, int exis,string f_in) {
 		idproducto = idprod;
 		nombre_producto = nprod;
 		idmarca = idma;

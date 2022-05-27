@@ -2,14 +2,14 @@
 #include<iostream>
 using namespace std;
 
-class Marcas{
+class Marca{
 private: int idmarca=0;
 public: string marca;
 
 public: 
-	Marcas() {
+	Marca() {
 	}
-	Marcas(int idma, string mar) {
+	Marca(int idma, string mar) {
 			 idmarca = idma;
 			 marca = mar;
 	}

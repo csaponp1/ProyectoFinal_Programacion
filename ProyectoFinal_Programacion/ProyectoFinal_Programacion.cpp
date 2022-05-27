@@ -1,14 +1,12 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "Empleados.h"
+#include "Empleado.h"
 #include <string.h>
 #include <conio.h>
+#include "Compra.h"
 //nueva libreria, time.h
 #include <time.h>
-
-
-
 
 using namespace std;
 int x = 0;
@@ -21,7 +19,12 @@ int main()
 	int idpuesto = 0, telefono = 0;
 	
 	bool genero=1;
-	
+
+	string idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, idpd[40];
+	int cantidad = 0, costo = 0, total = 0, can[40], i = 0;
+	float PrecioCostoUnitario = 0, pcu[40];
+	char opcion;
+
 	char genero1;
 	bool ciclo = true;
 	do
@@ -31,7 +34,8 @@ int main()
 		cout << "BIENVENIDO AL SISTEMA DE EL_BUEN_ZAPATO" << endl;
 		cout << "1. CRUD empleados" << endl;
 		cout << "2. CRUD clientes" << endl;
-		cout << "3. SALIR" << endl;
+		cout << "3. COMPRAR" << endl;
+		cout << "4. SALIR" << endl;
 		cout << "ELIJA !" << endl;
 		cin >> op;
 
@@ -83,9 +87,8 @@ int main()
 				cin.ignore();
 				cout << "ingrese fecha que inicio labores" << endl;
 				getline(cin, fecha_inicio_lab);
-				cout << "ingrese fecha/hora ingreso" << endl;
 				fechaingreso = calcular_hora();
-
+				cout << "fecha/hora de ingreso" << fechaingreso << endl;;
 				obj.setNombre(nombres);
 				obj.setApellido(apellidos);
 				obj.setDireccion(direccion);
@@ -141,8 +144,8 @@ int main()
 						cin.ignore();
 						cout << "ingrese fecha que inicio labores" << endl;
 						getline(cin, fecha_inicio_lab);
-						cout << "fecha-hora en que fue hecho el update: '" << calcular_hora<<"'";
 						fechaingreso = calcular_hora();
+						cout << "fecha/hora en que fue hecho el UPDATE : " << fechaingreso << endl;;
 						obj.setNombre(nombres);
 						obj.setApellido(apellidos);
 						obj.setDireccion(direccion);
@@ -193,13 +196,130 @@ int main()
 
 			{
 	case 2:
-		cout << "------------------CRUD PUESTOS-------------------------" << endl;
+		cout << "\t\t------------------CRUD CLIENTES-------------------------" << endl;
+		cout << "\t\t1. CREAR" << endl;
+		cout << "\t\t2. LEER" << endl;
+		cout << "\t\t3. ACTUALIZAR" << endl;
+		cout << "\t\t4. ELIMINAR" << endl;
+		cout << "\t\t5. ELIJA!!!!" << endl;
+
 		return 0;
 		break;
 			}
 
 			{
 	case 3:
+		cout << "REALIZAR COMPRA PARA ADQUIRIR MAS PRODUCTOS" << endl;
+		cout << "ingrese opcion" << endl;
+			cout << "1. ingresar compra" << endl;
+			cout << "2. ver compras" << endl;
+			cout << "3. eliminar" << endl;
+			cout << "4. actualizar" << endl;
+			cout << "ELIJA!!!" << endl;
+			cin >> op;
+		if (op == 1) {
+			cout << "Ingrese el No. de orden de compra: ";
+			cin >> noOrdenCompra;
+			cout << "Ingrese el Id del Proveedor: ";
+			cin >> idProveedor;
+			Compra cm = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+			cm.ingresoCompras();
+			do {
+				cout << "\nIngrese Id del Producto: ";
+				cin >> idProducto;
+				Compra cm = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+				cm.ingresoCompraDet();
+				cout << "Cantidad adquirida: ";
+				cin >> cantidad;
+				cout << "Costo unitario: ";
+				cin >> PrecioCostoUnitario;
+				idpd[i] = idProducto;
+				can[i] = cantidad;
+				pcu[i] = PrecioCostoUnitario;
+				if (i < 40) {
+					i++;
+				}
+				cout << "Desea ingresar otro producto? (s/n): ";
+				cin >> opcion;
+			} while (opcion == 's' || opcion == 'S');
+			cout << endl;
+			cm.insertCompra();
+			for (int x = 0; x < i; x++) {
+				idProducto = idpd[x];
+				cantidad = can[x];
+				PrecioCostoUnitario = pcu[x];
+				Compra in = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+				in.insertComprasDet();
+			}
+		}
+
+		if (op == 2) {
+			cout << "Que desea visualizar: " << endl;
+			cout << "1. Todas las compras\n2. Buscar compra especifica";
+			cin >> op2;
+			if (op2 == 1) {
+				Compra cm = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+				cm.lecturacompra();
+			}
+			if (op == 2) {
+				cout << "Ingrese el No. de orden de compra que desea consultar: ";
+				cin >> idCompra;
+				Compra cm = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+				cm.lecturacompra(idCompra);
+			}
+		}
+
+			if (op == 3) {
+				cout << "Ingrese el id de la compra que desea Eliminar: ";
+				cin >> idCompra;
+				Compra cm = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+				cm.eliminar(idCompra);
+			}
+
+			if (op == 4) {
+				cout << "Seleccione que tipo de actualizacion desea realizar, escriba el numero de la orden de compra: \n";
+				cout << "1. Actualizar datos de compra\n2. Actualizar los detalles de una compra\n";
+				cin >> op2;
+
+				if (op2 == 1) {
+					cout << "escriba el numero de la orden de compra que desea visualizar y actualizar: ";
+					cin >> noOrdenCompra;
+					Compra cm = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+					cm.lecturacompra(noOrdenCompra);
+
+					cout << "Ingrese el Id del Proveedor: ";
+					cin >> idProveedor;
+					Compra c = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+					c.actualizarcompra(noOrdenCompra);
+				}
+				if (op2 == 2) {
+					cout << "escriba el numero de la orden de compra que desea visualizar: ";
+					cin >> noOrdenCompra;
+					Compra cm = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+					cm.lecturacompra(noOrdenCompra);
+					do {
+						cout << "Indique cual detalle de la compra desea actualizar, escriba el id de esta misma: ";
+						cin >> idCompraDetalle;
+						cout << "Id de producto: ";
+						cin >> idProducto;
+						cout << "cantidad: ";
+						cin >> cantidad;
+						cout << "Precio c/u: ";
+						cin >> PrecioCostoUnitario;
+						Compra c = Compra(idCompra, idCompraDetalle, noOrdenCompra, idProveedor, idProducto, cantidad, PrecioCostoUnitario, costo, total);
+						c.actualizardet(idCompraDetalle);
+						cout << "Desea ingresar otro producto? (s/n): ";
+						cin >> opcion;
+					} while (opcion == 's' || opcion == 'S');
+				}
+
+			}
+
+		
+			}
+
+			{
+	case 4:
 		ciclo = false;	
 		ciclo2 = false;
 		break;
@@ -222,7 +342,4 @@ string calcular_hora() {
 	char buff[100];
 	strftime(buff, sizeof(buff), "%Y-%m-%d %H-%M-%S", &tm_now);
 	return buff;
-
-
-
 };
