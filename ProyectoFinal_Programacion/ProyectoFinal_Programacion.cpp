@@ -7,15 +7,20 @@
 #include "Compra.h"
 //nueva libreria, time.h
 #include <time.h>
+#include "Cliente.h"
+#include "Puesto.h"
+#include "Proveedore.h"
+#include "Producto.h"
+#include "Marca.h"
 
 using namespace std;
-int x = 0;
+int busqueda = 0;
 int op=0, op2=0, op3=0;
 string calcular_hora();
 int main()
 {
 
-	string nombres="", apellidos="", direccion="", dpi="", fecha_inicio_lab="", fechaingreso="", fecha_nac="";
+	string nombres="", apellidos="", direccion="", dpi="", fecha_inicio_lab="", fechaingreso="", fecha_nac="",nit="",correo="";
 	int idpuesto = 0, telefono = 0;
 	
 	bool genero=1;
@@ -25,15 +30,19 @@ int main()
 	float PrecioCostoUnitario = 0, pcu[40];
 	char opcion;
 
+	string puesto = "";
+	int idpuesto = 0;
+
 	char genero1;
 	bool ciclo = true;
 	do
 	{
-		calcular_hora();
+		
 		bool ciclo2 = true;
 		cout << "BIENVENIDO AL SISTEMA DE EL_BUEN_ZAPATO" << endl;
 		cout << "1. CRUD empleados" << endl;
 		cout << "2. CRUD clientes" << endl;
+
 		cout << "3. COMPRAR" << endl;
 		cout << "4. SALIR" << endl;
 		cout << "ELIJA !" << endl;
@@ -113,13 +122,13 @@ int main()
 				}
 				{
 			case 3:
-				char eleccion;
+				char valor;
 				cout << "ingrese id a modificar" << endl;
-				cin >> x;
-				obj.leer(x);
+				cin >> busqueda;
+				obj.leer(busqueda);
 				cout << "\nDesea modificar ? (s/n): ";
-				cin >> eleccion;
-				if (eleccion == 'n') {
+				cin >> valor;
+				if (valor == 'n') {
 					break;
 				}
 			
@@ -156,7 +165,7 @@ int main()
 						obj.setF_nacimiento(fecha_nac);
 						obj.setF_inilab(fecha_inicio_lab);
 						obj.setF_ingre(fechaingreso);
-						obj.actualizar(x);
+						obj.actualizar(busqueda);
 
 						system("pause");
 						system("cls");
@@ -167,14 +176,14 @@ int main()
 				}
 				{
 			case 4:
-				int busqueda = 0;
+				int valor = 0;
 				cout << "id a eliminar" << endl;
-				cin >> x;
-				obj.leer(x);
-				cout << "ELIMINAR? (1/0)" << endl;
 				cin >> busqueda;
-					if (busqueda == 1) {
-						obj.eliminar(x);
+				obj.leer(busqueda);
+				cout << "ELIMINAR? (1/0)" << endl;
+				cin >> valor;
+					if (valor == 1) {
+						obj.eliminar(busqueda);
 						}
 						else {
 							cout << "no hiciste nada" << endl;
@@ -194,21 +203,224 @@ int main()
 			break;
 			}
 
-			{
-	case 2:
-		cout << "\t\t------------------CRUD CLIENTES-------------------------" << endl;
-		cout << "\t\t1. CREAR" << endl;
-		cout << "\t\t2. LEER" << endl;
-		cout << "\t\t3. ACTUALIZAR" << endl;
-		cout << "\t\t4. ELIMINAR" << endl;
-		cout << "\t\t5. ELIJA!!!!" << endl;
+				{
+		case 2:
 
-		return 0;
-		break;
+			bool ciclo4 = true;
+			Cliente obj2 = Cliente(nombres, apellidos, direccion, fecha_nac, telefono, genero, nit, correo, fechaingreso);
+
+			cout << "\t\t_________________________________________________" << endl;
+			cout << "\t\t-------------- TABLA CLIEHTES -------------------- " << endl;
+			cout << "\t\tINGRESE OPCION" << endl;
+			cout << "\t\t1 CREAR" << endl;
+			cout << "\t\t2 LEER" << endl;
+			cout << "\t\t3 ACTUALIZAR" << endl;
+			cout << "\t\t4 ELIMINAR" << endl;
+			cout << "\t\t5. SALIR" << endl;
+			cout << "\t\tELIJA !" << endl;
+			cin >> op2;
+
+			switch (op2) {
+
+				{
+			case 1:
+				cin.ignore();
+				cout << "ingrese NIT" << endl;
+				getline(cin, nit);
+				cout << "ingrese nombres" << endl;
+				getline(cin, nombres);
+				cout << "ingrese apellidos" << endl;
+				getline(cin, apellidos);
+				cout << "ingrese telefono" << endl;
+cin >> telefono;
+cout << "ingrese genero (m = masculino / f = femenino)" << endl;
+cin >> genero1;
+genero = genero1 == 'm' ? 1 : 0;
+cin.ignore();
+cout << "ingrese correo electronico" << endl;
+getline(cin, correo);
+fechaingreso = calcular_hora();
+cout << "fecha/hora de ingreso" << fechaingreso << endl;;
+obj2.setNombre(nombres);
+obj2.setTelefono(telefono);
+obj2.setNit(nit);
+obj2.setGen(genero);
+obj2.setFecha_in(fechaingreso);
+obj2.setE_mail(correo);
+obj2.setApellido(apellidos);
+obj2.crear();
+
+break;
+				}
+				{
+			case 2:
+
+				system("cls");
+				obj2.leer();
+
+				break;
+				}
+
+				{
+			case 3:
+
+				char valor;
+				cout << "ingrese id a modificar" << endl;
+				cin >> busqueda;
+				obj2.leer(busqueda);
+				cout << "\nDesea modificar ? (s/n): ";
+				cin >> valor;
+				if (valor == 'n') {
+					break;
+				}
+				cin.ignore();
+				cout << "ingrese NIT" << endl;
+				getline(cin, nit);
+				cout << "ingrese nombres" << endl;
+				getline(cin, nombres);
+				cout << "ingrese apellidos" << endl;
+				getline(cin, apellidos);
+				cout << "ingrese telefono" << endl;
+				cin >> telefono;
+				cout << "ingrese genero (m = masculino / f = femenino)" << endl;
+				cin >> genero1;
+				genero = genero1 == 'm' ? 1 : 0;
+				cin.ignore();
+				cout << "ingrese correo electronico" << endl;
+				getline(cin, correo);
+				fechaingreso = calcular_hora();
+				cout << "fecha/hora de ingreso" << fechaingreso << endl;;
+				obj2.setNombre(nombres);
+				obj2.setTelefono(telefono);
+				obj2.setNit(nit);
+				obj2.setGen(genero);
+				obj2.setFecha_in(fechaingreso);
+				obj2.setE_mail(correo);
+				obj2.setApellido(apellidos);
+				obj2.actualizar(busqueda);
+				system("pause");
+				system("cls");
+
+				break;
+				}
+
+				{
+			case 4:
+				char valor;
+				cout << "ingrese id a eliminar" << endl;
+				cin >> busqueda;
+				obj2.leer(busqueda);
+				cout << "\nDesea eliminar ? (s/n): ";
+				cin >> valor;
+				if (valor == 'n') {
+					break;
+				}
+
+				obj2.eliminar(busqueda);
+
+				break;
+				}
+
+				{
+			case 5:
+				ciclo4 = false;
+				ciclo2 = false;
+				break;
+				}
+
+			}
+			break;
+			}
+
+	{
+	case 4:
+		bool ciclo3 = true;
+		//Puestos pu = Puestos(puesto);
+		cout << "------------------CRUD PUESTOS-------------------------" << endl;
+		cout << "\t\t_________________________________________________" << endl;
+		cout << "\t\t-------------- TABLA EMPLEADOS -------------------- " << endl;
+		cout << "\t\tINGRESE OPCION" << endl;
+		cout << "\t\t1 CREAR" << endl;
+		cout << "\t\t2 LEER" << endl;
+		cout << "\t\t3 ACTUALIZAR" << endl;
+		cout << "\t\t4 ELIMINAR" << endl;
+		cout << "\t\t5. SALIR" << endl;
+		cout << "\t\tELIJA !" << endl;
+		cin >> op2;
+
+		switch (op2) {
+
+			{
+		case 1:
+
+			cout << "ingrese puesto" << endl;
+			cin.ignore();
+			getline(cin, puesto);
+
+
+
+
+			pu.crear();
+			break;
+
+
+			{
+		case 2:
+			system("cls");
+			cout << "INFORMACION REVELADA" << endl;
+			pu.leer();
+			break;
 			}
 
 			{
-	case 3:
+		case 3:
+			char eleccion;
+			cout << "ingrese id a modificar" << endl;
+			cin >> x;
+			pu.leer();
+			cout << "\nDesea modificar ? (s/n): ";
+			cin >> eleccion;
+			if (eleccion == 'n') {
+				break;
+			}
+
+			cout << "ingrese puesto" << endl;
+			cin.ignore();
+			getline(cin, puesto);
+			pu.actualizar(x);
+
+			system("pause");
+			system("cls");
+
+
+			break;
+
+			}
+			{
+		case 4:
+			int busqueda = 0;
+			cout << "id a eliminar" << endl;
+			cin >> x;
+			pu.leer();
+			cout << "ELIMINAR? (1/0)" << endl;
+			cin >> busqueda;
+			if (busqueda == 1) {
+				pu.eliminar(x);
+			}
+			else {
+				cout << "no hiciste nada" << endl;
+			}
+			break;
+			}
+			}
+
+		}
+		
+	break;
+	}
+
+			{
+	case 7:
 		cout << "REALIZAR COMPRA PARA ADQUIRIR MAS PRODUCTOS" << endl;
 		cout << "ingrese opcion" << endl;
 			cout << "1. ingresar compra" << endl;

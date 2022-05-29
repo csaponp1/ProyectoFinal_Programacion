@@ -96,7 +96,7 @@ public:
 				resultado = mysql_store_result(cn.getconectar());
 				while (fila = mysql_fetch_row(resultado)) {
 					for (int i = 0; i <= 7; i++) {
-						cout << fila[i] << ",";
+						cout << fila[i] << " , ";
 					}
 					cout << endl;
 				}
@@ -121,7 +121,7 @@ public:
 		string gentext = to_string(genero);
 		string auxbuscar = to_string(x);
 		if (cn.getconectar()) {
-			string update = "update empleados SET nombres='" + nombres + "',apellidos='" + apellidos + "',nit='" + nit + "',genero=" + gentext + ",telefono='" + tel + "',correo_electronico='" + correo + "',fechaingreso='" + fechaingreso + "' where idclientes = " + auxbuscar + ";";
+			string update = "update clientes SET nombres='" + nombres + "', apellidos='" + apellidos + "',nit='" + nit + "',genero=" + gentext + ",telefono='" + tel + "',correo_electronico='" + correo + "',fechaingreso='" + fechaingreso + "' where idclientes = " + auxbuscar + ";";
 			const char* upda = update.c_str();
 			q_estado = mysql_query(cn.getconectar(), upda);
 			if (!q_estado) {
@@ -139,6 +139,7 @@ public:
 
 	void eliminar(int x) {
 		int q_estado;
+		
 		ConexionBD cn = ConexionBD();
 		cn.abrir_conexion();
 		string where = to_string(x);
@@ -159,4 +160,12 @@ public:
 		cn.cerrar_conexion();
 
 	}
+
+	void setNombre(string nom) { nombres = nom; };
+	void setApellido(string ape) { apellidos=ape; };
+	void setNit(string NIT) { nit = NIT; };
+	void setGen(bool gen) { genero = gen; };
+	void setTelefono(int tel) {telefono=tel; };
+	void setE_mail(string E_mail) { correo=E_mail; };
+	void setFecha_in(string Fecha_in) { fechaingreso=Fecha_in; };
 };
