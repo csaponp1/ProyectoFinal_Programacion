@@ -7,7 +7,7 @@
 using namespace std;
 
 class Proveedores : public Persona {
-private: int idproveedore = 0;
+
 
 public: string nit;
 
@@ -16,23 +16,23 @@ public:
 	}
 	/*a y g son solo variables que no tienen proposito, solo estan ahi porque la clase persona las necesita instanciadas
 	ademas el nombre del proveedor aqui lo estoy considerando como nombre de la clase persona*/
-	Proveedores(int idpro, string nom, string n, string dir, int tel, string a, int g) :Persona(nom, a, dir, g, tel) {
-		idproveedore = idpro;
-		nit = n;
+	Proveedores(string nom,string ape,string dir,string fn,int tel, bool gen, string numero_identificacion_t) :Persona (nom,ape,dir,fn,tel,gen) {
+		
+		nit = numero_identificacion_t;
 	}
 
 	void crear() {
 		int q_estado;
 		ConexionBD cn = ConexionBD();
 		cn.abrir_conexion();
-		string ip = to_string(idproveedore);
+		
 		string t = to_string(telefono);
-		string tt = to_string(genero);
+		
 
 		if (cn.getconectar()) {
 			string insert =
 				//corregir 
-				"INSERT INTO proveedores(idproveedore, nombres, nit, direccion,telefono, a, g)VALUES(" + ip + ", '" + nombres + "', '" + nit + "', '" + direccion + "', " + t + ",'" + apellidos + "'," + tt + ");";
+				"INSERT INTO proveedores(nombres, nit, direccion,telefono) VALUES('" + nombres + "', '" + nit + "', '" + direccion + "'," + t + ");";
 			const char* i = insert.c_str();
 			q_estado = mysql_query(cn.getconectar(), i);
 			if (!q_estado) {
@@ -64,7 +64,10 @@ public:
 			if (!q_query) {
 				resultado = mysql_store_result(cn.getconectar());
 				while (fila = mysql_fetch_row(resultado)) {
-					cout << fila[0] << " , " << fila[1] << " , " << fila[2] << " , " << fila[3] << " , " << fila[4] << " , " << fila[5] << " , " << fila[6] << endl;
+					for (int i = 0; i <= 4; i++) {
+						cout << fila[i] << " , ";
+					}
+					cout << endl;
 
 				}
 			}
@@ -78,17 +81,17 @@ public:
 		cn.cerrar_conexion();
 	}
 
-	void actualizar() {
+	void actualizar(int x) {
 		int q_estado = 0;
 		ConexionBD cn = ConexionBD();
 		cn.abrir_conexion();
-		cout << "ingrese id a actualizar " << endl;
-		string ip = to_string(idproveedore);
+		
+		string ip = to_string(x);
 		string t = to_string(telefono);
-		string tt = to_string(genero);
+		
 
 		if (cn.getconectar()) {
-			string update = "update proveedores SET idproveedore = " + ip + ", nombres = '" + nombres + "', direccion = '" + direccion + "', telefono = '" + t + "', apellidos = '" + apellidos + "', genero =" + tt + ",where idProveedores = " + ip + ";";
+			string update = "update proveedores SET proveedor = '"+nombres+"', nit = '"+nit+"', direccion = '"+direccion+"',telefono= '"+t+"' where idproveedores = "+ip+ ";";
 			const char* upda = update.c_str();
 			q_estado = mysql_query(cn.getconectar(), upda);
 			if (!q_estado) {

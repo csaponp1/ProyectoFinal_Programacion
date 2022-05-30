@@ -31,7 +31,7 @@ int main()
 	char opcion;
 
 	string puesto = "";
-	int idpuesto = 0;
+	
 
 	char genero1;
 	bool ciclo = true;
@@ -42,9 +42,9 @@ int main()
 		cout << "BIENVENIDO AL SISTEMA DE EL_BUEN_ZAPATO" << endl;
 		cout << "1. CRUD empleados" << endl;
 		cout << "2. CRUD clientes" << endl;
-
-		cout << "3. COMPRAR" << endl;
-		cout << "4. SALIR" << endl;
+		cout << "3. CRUD PUESTOS" << endl;
+		cout << "7. COMPRAR" << endl;
+		cout << "8. SALIR" << endl;
 		cout << "ELIJA !" << endl;
 		cin >> op;
 
@@ -232,25 +232,25 @@ int main()
 				cout << "ingrese apellidos" << endl;
 				getline(cin, apellidos);
 				cout << "ingrese telefono" << endl;
-cin >> telefono;
-cout << "ingrese genero (m = masculino / f = femenino)" << endl;
-cin >> genero1;
-genero = genero1 == 'm' ? 1 : 0;
-cin.ignore();
-cout << "ingrese correo electronico" << endl;
-getline(cin, correo);
-fechaingreso = calcular_hora();
-cout << "fecha/hora de ingreso" << fechaingreso << endl;;
-obj2.setNombre(nombres);
-obj2.setTelefono(telefono);
-obj2.setNit(nit);
-obj2.setGen(genero);
-obj2.setFecha_in(fechaingreso);
-obj2.setE_mail(correo);
-obj2.setApellido(apellidos);
-obj2.crear();
+				cin >> telefono;
+				cout << "ingrese genero (m = masculino / f = femenino)" << endl;
+				cin >> genero1;
+				genero = genero1 == 'm' ? 1 : 0;
+				cin.ignore();
+				cout << "ingrese correo electronico" << endl;
+				getline(cin, correo);
+				fechaingreso = calcular_hora();
+				cout << "fecha/hora de ingreso" << fechaingreso << endl;;
+				obj2.setNombre(nombres);
+				obj2.setTelefono(telefono);
+				obj2.setNit(nit);
+				obj2.setGen(genero);
+				obj2.setFecha_in(fechaingreso);
+				obj2.setE_mail(correo);
+				obj2.setApellido(apellidos);
+				obj2.crear();
 
-break;
+				break;
 				}
 				{
 			case 2:
@@ -289,7 +289,7 @@ break;
 				cout << "ingrese correo electronico" << endl;
 				getline(cin, correo);
 				fechaingreso = calcular_hora();
-				cout << "fecha/hora de ingreso" << fechaingreso << endl;;
+				cout << "fecha/hora de ingreso" << fechaingreso << endl;
 				obj2.setNombre(nombres);
 				obj2.setTelefono(telefono);
 				obj2.setNit(nit);
@@ -333,12 +333,11 @@ break;
 			}
 
 	{
-	case 4:
-		bool ciclo3 = true;
-		//Puestos pu = Puestos(puesto);
-		cout << "------------------CRUD PUESTOS-------------------------" << endl;
-		cout << "\t\t_________________________________________________" << endl;
-		cout << "\t\t-------------- TABLA EMPLEADOS -------------------- " << endl;
+	case 3:
+		bool ciclo5 = true;
+		Puesto pu = Puesto(puesto);
+		cout << "\t\t_______________________________________________________" << endl;
+		cout << "\t\t------------------CRUD PUESTOS-------------------------" << endl;
 		cout << "\t\tINGRESE OPCION" << endl;
 		cout << "\t\t1 CREAR" << endl;
 		cout << "\t\t2 LEER" << endl;
@@ -356,13 +355,10 @@ break;
 			cout << "ingrese puesto" << endl;
 			cin.ignore();
 			getline(cin, puesto);
-
-
-
-
+			pu.setPuesto(puesto);
 			pu.crear();
 			break;
-
+			}
 
 			{
 		case 2:
@@ -376,8 +372,8 @@ break;
 		case 3:
 			char eleccion;
 			cout << "ingrese id a modificar" << endl;
-			cin >> x;
-			pu.leer();
+			cin >> busqueda;
+			pu.leer(busqueda);
 			cout << "\nDesea modificar ? (s/n): ";
 			cin >> eleccion;
 			if (eleccion == 'n') {
@@ -387,7 +383,8 @@ break;
 			cout << "ingrese puesto" << endl;
 			cin.ignore();
 			getline(cin, puesto);
-			pu.actualizar(x);
+			pu.setPuesto(puesto);
+			pu.actualizar(busqueda);
 
 			system("pause");
 			system("cls");
@@ -398,21 +395,25 @@ break;
 			}
 			{
 		case 4:
-			int busqueda = 0;
-			cout << "id a eliminar" << endl;
-			cin >> x;
-			pu.leer();
-			cout << "ELIMINAR? (1/0)" << endl;
+			char eleccion;
+			cout << "ingrese ID a eliminar: ";
 			cin >> busqueda;
-			if (busqueda == 1) {
-				pu.eliminar(x);
+			pu.leer(busqueda);
+			cout << "\nELIMINAR? (s/n)" << endl;
+			cin >> eleccion;
+			if (eleccion == 's') {
+				pu.eliminar(busqueda);
 			}
 			else {
 				cout << "no hiciste nada" << endl;
 			}
 			break;
 			}
-			}
+			
+		case 5:
+			ciclo5 = false;
+			ciclo2 = false;
+			break;
 
 		}
 		
@@ -531,7 +532,7 @@ break;
 			}
 
 			{
-	case 4:
+	case 8:
 		ciclo = false;	
 		ciclo2 = false;
 		break;
