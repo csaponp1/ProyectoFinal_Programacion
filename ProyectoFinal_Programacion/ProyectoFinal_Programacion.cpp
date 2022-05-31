@@ -34,6 +34,14 @@ int main()
 	
 
 	char genero1;
+	//variables para instanciar objetos productos
+	string producto = "", idmarca = "", descripcion = "";
+	string id_producto = "";
+	int existencia = 0;
+	float p_venta = 0, p_costo = 0;
+	string img = "";
+	
+
 	bool ciclo = true;
 	do
 	{
@@ -43,6 +51,7 @@ int main()
 		cout << "1. CRUD empleados" << endl;
 		cout << "2. CRUD clientes" << endl;
 		cout << "3. CRUD PUESTOS" << endl;
+		cout << "4. CRUD PRODUCTOS" << endl;
 		cout << "7. COMPRAR" << endl;
 		cout << "8. SALIR" << endl;
 		cout << "ELIJA !" << endl;
@@ -249,6 +258,7 @@ int main()
 				obj2.setE_mail(correo);
 				obj2.setApellido(apellidos);
 				obj2.crear();
+				
 
 				break;
 				}
@@ -420,6 +430,119 @@ int main()
 	break;
 	}
 
+	{
+	case 4:
+		bool ciclo6 = true;
+		Producto pro = Producto(producto, idmarca, descripcion, img, p_costo, p_venta, existencia, fechaingreso);
+		cout << "\t\t_______________________________________________________" << endl;
+		cout << "\t\t------------------productos-------------------------" << endl;
+		cout << "\t\tINGRESE OPCION" << endl;
+		cout << "\t\t1 CREAR" << endl;
+		cout << "\t\t2 LEER" << endl;
+		cout << "\t\t3 ACTUALIZAR" << endl;
+		cout << "\t\t4 ELIMINAR" << endl;
+		cout << "\t\t5. SALIR" << endl;
+		cout << "\t\tELIJA !" << endl;
+		cin >> op2;
+
+		switch (op2) {
+
+			{
+		case 1:
+			cout << "ingrese producto" << endl;
+			cin >> producto;
+			cout << " ingrese id_marca" << endl;
+			cin >> idmarca;
+			cin.ignore();
+			cout << "ingrese descripcion" << endl;
+			getline(cin, descripcion);
+			img = "0";
+			cout << "ingrese precio costo" << endl;
+			cin >> p_costo;
+			cout << "ingrese precio venta" << endl;
+			cin >> p_venta;
+			cout << "ingrese existencia" << endl;
+			cin >> existencia;
+			fechaingreso = calcular_hora();
+			cout << "fecha/hora ingreso: " << fechaingreso;
+			pro.setProducto(producto);
+			pro.setIDmarca(idmarca);
+			pro.setDescrip(descripcion);
+			pro.setPrecio_c(p_costo);
+			pro.setPrecio_v(p_venta);
+			pro.setEXIST(existencia);
+			pro.setF_ingre(fechaingreso);
+			pro.crear();
+			break;
+			}
+
+			{
+		case 2:
+			cout << " Mostrar registros" << endl;
+			system("cls");
+			pro.leer();
+			break;
+			}
+
+			{
+		case 3:
+			cout << "---------ACTUALIZACION---------------" << endl;
+			cout << "ingrese nuevos datos...! luego dele un valor a where" << endl;
+			cout << "ingrese producto" << endl;
+			cin >> producto;
+			cout << " ingrese id_marca" << endl;
+			cin >> idmarca;
+			cin.ignore();
+			cout << "ingrese descripcion" << endl;
+			getline(cin, descripcion);
+			cout << "ingrese precio costo" << endl;
+			cin >> p_costo;
+			cout << "ingrese precio venta" << endl;
+			cin >> p_venta;
+			cout << "ingrese existencia" << endl;
+			cin >> existencia;
+			fechaingreso = calcular_hora();
+			cout << "fecha/hora ingreso: " << fechaingreso;
+			pro.setProducto(producto);
+			pro.setF_ingre(fechaingreso);
+			
+			pro.actualizar();
+			
+			break;
+
+
+			}
+			{
+		case 4:
+			int op3 = 0;
+			cout << "ingrese registro a eliminar" << endl;
+			cin >> busqueda;
+			pro.leer(busqueda);
+
+			cout << "desea eliminar? (1/0)" << endl;
+			cin >> op3;
+
+			if (op3 == 1) {
+				pro.eliminar(busqueda);
+			}
+			else {
+				cout << "no se elimino" << endl;
+			}
+			break;
+			
+			}
+
+		case 5:
+			ciclo6 = false;
+			ciclo2 = false;
+			break;
+
+		}
+
+		break;
+	}
+
+
 			{
 	case 7:
 		cout << "REALIZAR COMPRA PARA ADQUIRIR MAS PRODUCTOS" << endl;
@@ -553,6 +676,6 @@ string calcular_hora() {
 	struct tm tm_now;
 	localtime_s(&tm_now, &now);
 	char buff[100];
-	strftime(buff, sizeof(buff), "%Y-%m-%d %H-%M-%S", &tm_now);
+	strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", &tm_now);
 	return buff;
 };
