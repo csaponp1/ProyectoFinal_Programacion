@@ -20,9 +20,9 @@ private:
 public:
 	Empleado() {
 	}
-	Empleado(string nom, string ape, string dir, int tel, bool gen,string dpi,int id_puesto, string fn, string fecha_inilab, string fecha_ingre) : Persona(nom, ape, dir, tel, gen) {
+	Empleado(string nom, string ape, string dir,string fn, int tel, bool gen,string dpi,int id_puesto, string fecha_inilab, string fecha_ingre) : Persona(nom,ape,dir,fn,tel,gen) {
 
-		fecha_nacimiento = fn;
+		//fecha_nacimiento = fn;
 		fecha_inicio_labores = fecha_inilab;
 		fechaingreso = fecha_ingre;
 		DPI = dpi;
@@ -175,7 +175,7 @@ public:
 
 	///////////////////////////
 	void actualizar(int x) {
-		int op;
+	
 		int q_estado = 0;
 		ConexionBD cn = ConexionBD();
 		cn.abrir_conexion();
